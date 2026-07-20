@@ -50,7 +50,7 @@ jobs:
           run: checkov -d . --soft-fail
         - name: run plan ### terraform to check the preview of codes 
           working-directory: envs/dev
-          run: terraform plan
+          run: terraform plan -var-file="dev.tfvars"
           
           
 
