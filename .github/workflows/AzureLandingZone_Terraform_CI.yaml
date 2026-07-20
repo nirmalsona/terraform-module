@@ -6,17 +6,52 @@ on:   ###event trigger
      - main   ####source code
 
 jobs:
-   terraform_CI:   ###########Jobid
+   terraform_validation:   ###########Jobid
       name: terraform CI(download , checkout & init)    #########logical job name
       runs-on: ubuntu-latest  #########runner for this job
       steps:
-        - name: Install terraform
+        - name: Install terraform ###download terraform package
           uses: hashicorp/setup-terraform@v3
-        - name: check out the code
+        - name: check out the code ####Checkout the code
           uses: actions/checkout@v4
-        - name: terraform init
+        - name: Iniliaze the terraform project ###terraform initlize
           working-directory: envs/dev
           run: terraform init
+        - name: formatting the code ## formatting the code
+          working-directory: envs/dev
+          run: terraform fmt
+        - name: validate the codes # validates the code
+          working-directory: envs/dev
+          run: terraform validate
+        - name: terraform fmt ## formatting the code
+          working-directory: envs/dev
+          run: terraform fmt
+   terraform_security_scan:   ###########Jobid
+      name: security_scan  #########logical job name
+      runs-on: ubuntu-latest  #########runner for this job
+      steps:
+        - name: Install terraform ###download terraform package
+          uses: hashicorp/setup-terraform@v3
+        - name: check out the code ####Checkout the code
+          uses: actions/checkout@v4
+        - name: Iniliaze the terraform project ###terraform initlize
+          working-directory: envs/dev
+          run: terraform init
+        - name: setup tflint ## download tflint
+          uses: terraform-linters/setup-tflint@v4
+        - name: scanning the  codes bt tflint # scanning the code
+          working-directory: envs/dev
+          run: tflint
+        - name: Install checkov ## download the checkov
+          working-directory: envs/dev
+          run: pip install checkov
+        - name: run checkov
+          working-directory: envs/dev
+          run: checkov-d .
+          
+
+          
+          
 
 
        
