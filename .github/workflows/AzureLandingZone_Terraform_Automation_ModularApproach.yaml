@@ -1,1 +1,13 @@
+name: Azurelandingzone_Terraform_Automation
 
+on:
+  push:
+    branches:
+        - main
+jobs:
+  build:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout the code
+         uses: actions/checkout@v4
+  
