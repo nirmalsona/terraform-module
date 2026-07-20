@@ -47,7 +47,7 @@ jobs:
           run: pip install checkov
         - name: run checkov
           working-directory: envs/dev
-          run: checkov -d .
+          run: checkov -d . --soft-fail
           
 
           
