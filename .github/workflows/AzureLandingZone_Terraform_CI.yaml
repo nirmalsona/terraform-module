@@ -6,24 +6,14 @@ on:   ###event trigger
      - main   ####source code
 
 jobs:
-   terraform_setup:   ###########Jobid
-      name: terraform download    #########logical job name
+   terraform_CI:   ###########Jobid
+      name: terraform CI(download , checkout & init)    #########logical job name
       runs-on: ubuntu-latest  #########runner for this job
       steps:
         - name: Install terraform
           uses: hashicorp/setup-terraform@v3
-   checkout_code:   ###########Jobid
-      needs: terraform_setup
-      name: checkout source code    #########logical job name
-      runs-on: ubuntu-latest  #########runner for this job
-      steps:
         - name: check out the code
           uses: actions/checkout@v4
-   Terraform_init:   ###########Jobid
-      needs: checkout_code
-      name: terraform init   #########logical job name
-      runs-on: ubuntu-latest  #########runner for this job
-      steps:
         - name: terraform init
           working-directory: envs/dev
           run: terraform init
