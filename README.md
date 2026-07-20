@@ -18,5 +18,9 @@ I declared azurerm provider in provider.tf and used module block for each child 
 
 finally I assigned all arguments values to declared variables accordingly for each child module in dev.tfvars.
 
-after that I scueesfully created fully landing one for dev env.
+after that I scueesfully created fully landing one for dev env in dev folder via local terminal .
+
+
+
+
 
