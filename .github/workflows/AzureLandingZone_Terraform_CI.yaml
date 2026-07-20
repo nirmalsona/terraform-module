@@ -48,6 +48,10 @@ jobs:
         - name: run checkov
           working-directory: envs/dev
           run: checkov -d . --soft-fail
+        - name: run plan ### terraform to check the preview of codes 
+          working-directory: envs/dev
+          run: terraform plan
+          
           
 
           
