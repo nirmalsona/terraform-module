@@ -1,0 +1,1 @@
+variable "nics_vim" {}
