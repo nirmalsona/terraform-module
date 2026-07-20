@@ -1,0 +1,35 @@
+name: Terraform_CI   ##workflow name
+
+on:   ###event trigger
+ push:   ####event method
+    branches:
+     - main   ####source code
+
+jobs:
+   terraformsetup:   ###########Jobid
+      name: terraform download    #########logical job name
+      runs-on: ubuntu-latest  #########runner for this job
+      steps:
+        - name: Install terraform
+          uses: hashicorp/setup-terraform@v3
+   checkout code:   ###########Jobid
+      needs: terraformsetup
+      name: checkout source code    #########logical job name
+      runs-on: ubuntu-latest  #########runner for this job
+      steps:
+        - name: check out the code
+          uses: actions/checkout@v4
+   Terraform init:   ###########Jobid
+      needs: checkout code
+      name: terraform init   #########logical job name
+      runs-on: ubuntu-latest  #########runner for this job
+      steps:
+        - name: terraform init
+          working-directory: envs/dev
+          run: terraform init
+
+
+       
+  
+    
+  
