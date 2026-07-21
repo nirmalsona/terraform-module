@@ -10,8 +10,8 @@ jobs:
       name: terraform CI(download , checkout & init)    #########logical job name
       runs-on: self-hosted #########runner for this job
       steps:
-        - name: Install terraform ###download terraform package
-          uses: hashicorp/setup-terraform@v3
+        #- name: Install terraform ###download terraform package
+        #  uses: hashicorp/setup-terraform@v3
         - name: check out the code ####Checkout the code
           uses: actions/checkout@v4
         - name: Iniliaze the terraform project ###terraform initlize
@@ -30,10 +30,10 @@ jobs:
       name: security_scan  #########logical job name
       runs-on: self-hosted  #########runner for this job
       steps:
-        - name: Install terraform ###download terraform package
-          uses: hashicorp/setup-terraform@v3
-        - name: check out the code ####Checkout the code
-          uses: actions/checkout@v4
+        #-name: Install terraform ###download terraform package
+        #  uses: hashicorp/setup-terraform@v3
+        #-name: check out the code ####Checkout the code
+        #  uses: actions/checkout@v4
         - name: Iniliaze the terraform project ###terraform initlize
           working-directory: envs/dev
           run: terraform init
