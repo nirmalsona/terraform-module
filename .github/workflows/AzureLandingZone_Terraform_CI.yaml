@@ -42,15 +42,15 @@ jobs:
         - name: scanning the  codes bt tflint # scanning the code
           working-directory: envs/dev
           run: tflint
-        - name: Install checkov ## download the checkov
-          working-directory: envs/dev
-          run: sudo apt install python3-checkov
         - name: run checkov
           working-directory: envs/dev
           run: checkov -d . --soft-fail
         - name: run plan ### terraform to check the preview of codes 
           working-directory: envs/dev
           run: terraform plan -var-file="dev.tfvars"
+        - name: Run terraform apply ## download the checkov
+          working-directory: envs/dev
+          run: terraform apply -var-file="dev.tfvars" -auto-approve
           
           
 
