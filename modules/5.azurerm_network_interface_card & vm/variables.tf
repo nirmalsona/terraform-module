@@ -1,1 +1,4 @@
-variable "nics_vim" {}
+variable "nics_vim" {
+ type = map(any)
+
+}
