@@ -47,10 +47,10 @@ resource "azurerm_linux_virtual_machine" "vms" {
 
   source_image_reference {
 
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "24.04-LTS"
-    version   = "latest"
+  Publisher: Canonical
+Offer: ubuntu-24_04-lts
+Sku: server
+Version: latest
   }
   }
 
