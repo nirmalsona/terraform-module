@@ -8,7 +8,7 @@ on:   ###event trigger
 jobs:
    terraform_validation:   ###########Jobid
       name: terraform CI(download , checkout & init)    #########logical job name
-      runs-on: ubuntu-latest  #########runner for this job
+      runs-on: nirmal  #########runner for this job
       steps:
         - name: Install terraform ###download terraform package
           uses: hashicorp/setup-terraform@v3
