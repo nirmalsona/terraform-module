@@ -34,7 +34,7 @@ resource "azurerm_linux_virtual_machine" "vms" {
 
   admin_password = "devops@123"
 
-  disable_password_authentication = "false"
+  disable_password_authentication = false
 
   network_interface_ids = [azurerm_network_interface.nics[each.key].id]
 
@@ -47,10 +47,10 @@ resource "azurerm_linux_virtual_machine" "vms" {
 
   source_image_reference {
 
-  Publisher: Canonical
-Offer: ubuntu-24_04-lts
-Sku: server
-Version: latest
+  publisher = "Canonical"
+  offer      = "ubuntu-24_04-lts"
+  sku        = "server"
+  version    = "latest"
   }
   }
 
