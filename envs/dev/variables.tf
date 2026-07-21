@@ -1,6 +1,19 @@
-variable "rgs" {} # Multiple RG names ke liye
-variable "vnets" {}  # Multiple VNet names ke liye
-variable "subnets" {} # Multiple Subnet CIDR blocks ke liye
-variable "pips" {} # Multiple Public IP names ke liye
-variable "nics_vim" {} # Multiple NIC names ke liye
+variable "rgs" {
+  type = map(any)
+}
 
+variable "vnets" {
+  type = map(any)
+}
+
+variable "subnets" {
+  type = map(any)
+}
+
+variable "pips" {
+  type = map(any)
+}
+
+variable "nics_vim" {
+  type = map(any)
+}
