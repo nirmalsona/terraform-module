@@ -1,1 +1,4 @@
-variable "subnets" {}
+variable "subnets" {
+ type = map(any)
+
+}
