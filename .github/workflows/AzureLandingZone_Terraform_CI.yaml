@@ -28,7 +28,7 @@ jobs:
           run: terraform fmt
    terraform_security_scan:   ###########Jobid
       name: security_scan  #########logical job name
-      runs-on: ubuntu-latest  #########runner for this job
+      runs-on: self-hosted  #########runner for this job
       steps:
         - name: Install terraform ###download terraform package
           uses: hashicorp/setup-terraform@v3
