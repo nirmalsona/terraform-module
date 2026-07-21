@@ -44,7 +44,7 @@ jobs:
           run: tflint
         - name: Install checkov ## download the checkov
           working-directory: envs/dev
-          run: pip install checkov
+          run: sudo apt install python3-checkov
         - name: run checkov
           working-directory: envs/dev
           run: checkov -d . --soft-fail
