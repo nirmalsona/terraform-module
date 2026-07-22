@@ -20,11 +20,13 @@ terraform {
 	   
 	   storage_account_name = "devopsnirmalsona2016"
 
-      
+       resource_group_name  = "dev_nirmal"
 	   
 	   container_name = "dev"
 	   
 	   key = "dev.tfstate"
+
+       use_azuread_auth = true
 	   
 	   }
 	   }
