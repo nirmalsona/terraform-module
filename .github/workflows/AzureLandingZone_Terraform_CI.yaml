@@ -122,46 +122,43 @@ jobs:
 			path: envs/dev/tfplan
 		  
 	terraform_apply: # 4:- finally deployent
-	    needs: terraform_plan_preview
-		environment: dev
-        name: Infraacture deployment by terraform apply    
-        runs-on: ubuntu-latest
+	   needs: terraform_plan_preview
+	   environment: dev
+       name: Infraacture deployment by terraform apply    
+       runs-on: ubuntu-latest
         steps:
 		
-		- name: check out the terraform configuation code
-          uses: actions/checkout@v4
+		 - name: check out the terraform configuation code
+           uses: actions/checkout@v4
 		  
 		  
-		- name: Azure Login
-          uses: azure/login@v2
-          with:
+		 - name: Azure Login
+           uses: azure/login@v2
+           with:
              creds: ${{ secrets.AZURE_CREDENTIALS }}  
 		  
 		
 		
-		- name: Terraform setup 
-		  uses: hashicorp/setup-terraform@v3
+		 - name: Terraform setup 
+		   uses: hashicorp/setup-terraform@v3
 		  
 		 
-		- name: Initiliaze the terraform project
+		 - name: Initiliaze the terraform project
 		  run: terraform init
 		  
-		- name: Download artifact
-		  uses: actions/download-artifact@v4
-		  with:
-		    name: tfplan
-			path: envs/dev
+		 - name: Download artifact
+		   uses: actions/download-artifact@v4
+		   with:
+		     name: tfplan
+			 path: envs/dev
 			
 			
-	  - name: Azure Login
-          uses: azure/login@v2
-          with:
+	     - name: Azure Login
+           uses: azure/login@v2
+           with:
              creds: ${{ secrets.AZURE_CREDENTIALS }}
 			 
-	    - name: Finally terraform apply
-		  run: terraform apply  -auto-approve tfplan
+	     - name: Finally terraform apply
+		   run: terraform apply  -auto-approve tfplan
 			  
 			 
-		
-         
-		 
