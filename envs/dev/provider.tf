@@ -14,7 +14,18 @@ terraform {
 }
 
 
+terraform {
 
+       backend "azurerm" {
+	   
+	   storage_account_name = "devopsnirmalsona2016"
+	   
+	   container_name = "dev"
+	   
+	   key = "dev.tfstate"
+	   
+	   }
+	   }
 
 
 provider "azurerm" {
@@ -24,3 +35,7 @@ provider "azurerm" {
 
 
 }
+		   
+         	 
+   
+	  
