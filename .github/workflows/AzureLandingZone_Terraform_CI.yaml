@@ -1,164 +1,136 @@
-name: Terraform_CI_CD   ##workflow name
+name: Terraform_CI_CD
 
-on:   ###event trigger
- push:   ####event method
+on:
+  push:
     branches:
-     - main   ####source code
+      - main
 
 defaults:
-	   run: 
-	    working-directory: envs/dev
+  run:
+    working-directory: envs/dev
 
 jobs:
-    
-	
-	
-    terraform_validation: #1:- Validation 
-      name: terraform CI(download , checkout & init)    #########logical job name
-      runs-on: ubuntu-latest #########runner for this job
-	  
-      steps:
-        - name: Install terraform ###download terraform package
-          uses: hashicorp/setup-terraform@v3
-		  
-        - name: check out the code ####Checkout the code
-          uses: actions/checkout@v4
-		  
-		- name: Azure Login
-          uses: azure/login@v2
-          with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}  
-		  
-		  
-        - name: Iniliaze the terraform project ###terraform initlize
-          run: terraform init
-		  
-        - name: formatting the code ## formatting the code
-          run: terraform fmt  -check -recursive
-		  
-        - name: validate the codes # validates the code
-          run: terraform validate
-		  
-			
-        
-    terraform_security_scan: #2:- Static code quality check
-	  needs: terraform_validation
-      
-      name: security_scan  #########logical job name
-      runs-on: ubuntu-latest  #########runner for this job
-	  
-      steps:
-        - name: Install terraform ###download terraform package
-          uses: hashicorp/setup-terraform@v3
-		  
-        - name: check out the code ####Checkout the code
-          uses: actions/checkout@v4
-		  
-		- name: Azure Login
-          uses: azure/login@v2
-          with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}  
-		  
-		  
-			 
-        - name: Iniliaze the terraform project ###terraform initlize
-          run: terraform init
-		  
-        - name: setup tflint ## download tflint
-          uses: terraform-linters/setup-tflint@v4
-		  
-        - name: Initiliaze TFlint ## download tflint
-		  run: tflint --init
-		  
-        - name: scanning the  codes by tflint # scanning the code
-          run: tflint
-		  
-        - name: setup checkov
-          run: pip3 install checkov
-		  
-        - name: Security code scan by checkov
-          run: checkov -d . --soft-fail
-	
-	terraform_plan_preview: #3:- Plan review 
-	  
-	  needs: terraform_security_scan
-	  
-      name: Terraform plan
-      runs-on: ubuntu-latest
-      steps:
-       
-        - name: check out the terraform configuation code
-          uses: actions/checkout@v4
-		
-		
-		- name: Terraform setup 
-		  uses: hashicorp/setup-terraform@v3
-		  
-		 
-		- name: Azure Login
-          uses: azure/login@v2
-          with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}  
-		  
-		  
-		 
-		- name: Initiliaze the terraform project
-		  run: terraform init
-		  
-		  
-		- name: Azure Login
-          uses: azure/login@v2
-          with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}  
-		  
-		  
-		- name: preview of infraacture before deploy
-		  run: terraform plan -out=tfplan -var-file="dev.tfvars"
-		 
-		- name: Upload terraform plan arctifact
-		  uses: actions/upload-artifact@v4
-		  with:
-		    name: tfplan
-			path: envs/dev/tfplan
-		  
-	terraform_apply: # 4:- finally deployent
-	   needs: terraform_plan_preview
-	   environment: dev
-       name: Infraacture deployment by terraform apply    
-       runs-on: ubuntu-latest
-        steps:
-		
-		 - name: check out the terraform configuation code
-           uses: actions/checkout@v4
-		  
-		  
-		 - name: Azure Login
-           uses: azure/login@v2
-           with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}  
-		  
-		
-		
-		 - name: Terraform setup 
-		   uses: hashicorp/setup-terraform@v3
-		  
-		 
-		 - name: Initiliaze the terraform project
-		  run: terraform init
-		  
-		 - name: Download artifact
-		   uses: actions/download-artifact@v4
-		   with:
-		     name: tfplan
-			 path: envs/dev
-			
-			
-	     - name: Azure Login
-           uses: azure/login@v2
-           with:
-             creds: ${{ secrets.AZURE_CREDENTIALS }}
-			 
-	     - name: Finally terraform apply
-		   run: terraform apply  -auto-approve tfplan
-			  
-			 
+
+  terraform_validation:
+    name: Terraform Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        run: terraform validate
+
+  terraform_security_scan:
+    name: Terraform Security Scan
+    needs: terraform_validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Initialize TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint
+
+      - name: Install Checkov
+        run: pip3 install checkov
+
+      - name: Run Checkov
+        run: checkov -d . --soft-fail
+
+  terraform_plan_preview:
+    name: Terraform Plan
+    needs: terraform_security_scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -var-file="dev.tfvars"
+
+      - name: Generate Human Readable Plan
+        run: terraform show tfplan > plan.txt
+
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: |
+            envs/dev/tfplan
+            envs/dev/plan.txt
+
+  terraform_apply:
+    name: Terraform Apply
+    needs: terraform_plan_preview
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Download Terraform Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: terraform-plan
+          path: envs/dev
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
