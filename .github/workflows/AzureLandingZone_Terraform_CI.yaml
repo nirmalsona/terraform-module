@@ -8,10 +8,10 @@ on:   ###event trigger
 jobs:
    terraform_validation:   ###########Jobid
       name: terraform CI(download , checkout & init)    #########logical job name
-      runs-on: uubuntu-latest #########runner for this job
+      runs-on: ubuntu-latest #########runner for this job
       steps:
-        #- name: Install terraform ###download terraform package
-        #  uses: hashicorp/setup-terraform@v3
+        - name: Install terraform ###download terraform package
+          uses: hashicorp/setup-terraform@v3
         - name: check out the code ####Checkout the code
           uses: actions/checkout@v4
         - name: Iniliaze the terraform project ###terraform initlize
@@ -30,17 +30,14 @@ jobs:
       name: security_scan  #########logical job name
       runs-on: ubuntu-latest  #########runner for this job
       steps:
-        #-name: Install terraform ###download terraform package
-        #  uses: hashicorp/setup-terraform@v3
-        #-name: check out the code ####Checkout the code
-        #  uses: actions/checkout@v4
+        - name: Install terraform ###download terraform package
+          uses: hashicorp/setup-terraform@v3
+        - name: check out the code ####Checkout the code
+          uses: actions/checkout@v4
         - name: Azure Login
           uses: azure/login@v2
           with:
-            client-id: ${{ secrets.AZURE_CLIENT_ID }}
-            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+             creds: ${{ secrets.AZURE_CREDENTIALS }}
         - name: Iniliaze the terraform project ###terraform initlize
           working-directory: envs/dev
           run: terraform init
@@ -69,3 +66,4 @@ jobs:
   
     
   
+ 
