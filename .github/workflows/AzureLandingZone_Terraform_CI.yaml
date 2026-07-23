@@ -133,4 +133,4 @@ jobs:
           path: envs/dev
 
       - name: Terraform Apply
-        run: terraform apply terraform-plan -auto-approve
+        run: terraform apply terraform-plan
