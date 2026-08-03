@@ -132,5 +132,5 @@ jobs:
           name: terraform-plan
           path: envs/dev
 
-      - name: Terraform Apply
-        run: terraform destroy -var-file="dev.tfvars
+      - name: Terraform destroy
+        run: terraform destroy -var-file="dev.tfvars"
