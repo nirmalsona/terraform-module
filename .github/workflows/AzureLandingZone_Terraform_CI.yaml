@@ -133,4 +133,4 @@ jobs:
           path: envs/dev
 
       - name: Terraform Apply
-        run: terraform destroy -var-file=dev.tfvars -auto-approve
+        run: terraform apply terraform-plan
