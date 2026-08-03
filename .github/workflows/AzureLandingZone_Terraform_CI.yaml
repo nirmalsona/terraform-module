@@ -92,17 +92,17 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -var-file="dev.tfvars"
+        run: terraform plan -destroy -out=destroy.tfplan -var-file="dev.tfvars"
 
       - name: Generate Human Readable Plan
-        run: terraform show tfplan > plan.txt
+        run: terraform show destroy.tfplan > plan.txt
 
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v4
         with:
           name: terraform-plan
           path: |
-            envs/dev/tfplan
+            envs/dev/destroy.tfplan
             envs/dev/plan.txt
 
   terraform_apply:
@@ -133,4 +133,4 @@ jobs:
           path: envs/dev
 
       - name: Terraform destroy
-        run: terraform destroy -var-file="dev.tfvars"
+        run: terraform apply destroy.tfplan
