@@ -10,10 +10,13 @@ variable "subnets" {
   type = map(any)
 }
 
-variable "pips" {
-  type = map(any)
-}
+
 
 variable "nics_vim" {
   type = map(any)
 }
+
+variable "nsgs" {
+  type = map(any)
+}
+

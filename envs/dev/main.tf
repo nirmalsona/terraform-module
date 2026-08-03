@@ -26,22 +26,35 @@ module "dev_subnet" {
 
 }
 
-module "dev_public_ip" {
 
-  depends_on = [module.dev_rg]
-  source     = "../../modules/4.azurerm_public_ip"
-
-  pips = var.pips
-
-
-}
 
 module "nic_vm" {
 
-  depends_on = [module.dev_public_ip, module.dev_subnet]
+  depends_on = [module.dev_subnet]
   source     = "../../modules/5.azurerm_network_interface_card & vm"
 
   nics_vim = var.nics_vim
 
 }
 
+
+module "nsg" {
+
+  depends_on = [module.dev_subnet]
+  source     = "../../modules/6.azurerm_network_security_group"
+
+  nsgs = var.nsgs
+
+}
+
+
+module "nsg_nic_ass" {
+
+  depends_on = [module.nsg, module.nic_vm]
+  source     = "../../modules/7.azurerm_nsg_nic association"
+
+  nic_name            = "dev_frontend_nic"
+  nsg_name            = "ssh"
+  resource_group_name = "dev_rg1"
+
+}

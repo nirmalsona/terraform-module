@@ -12,10 +12,12 @@ resource "azurerm_network_interface" "nics" {
 
         private_ip_address_allocation = "Dynamic"
 
-        public_ip_address_id = data.azurerm_public_ip.pips[each.key].id
+        
       }
 
 }
+
+
 
 
 resource "azurerm_linux_virtual_machine" "vms" {
@@ -28,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "vms" {
 
   resource_group_name = each.value.resource_group_name
 
-  size = "Standard_F2"
+  size = "Standard_B2s"
 
   admin_username = "devops"
 
@@ -45,13 +47,12 @@ resource "azurerm_linux_virtual_machine" "vms" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_reference {
-
+ source_image_reference {
   publisher = "Canonical"
-  offer      = "ubuntu-24_04-lts"
-  sku        = "server"
-  version    = "latest"
-  }
+  offer     = "0001-com-ubuntu-server-jammy"
+  sku       = "22_04-lts"
+  version   = "latest"
+}
   }
 
 

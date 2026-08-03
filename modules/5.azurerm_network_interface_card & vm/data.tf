@@ -10,13 +10,3 @@ data "azurerm_subnet" "subnets" {
 
 
 }
-
-data "azurerm_public_ip" "pips" {
-       for_each = var.nics_vim
-
-       name = each.value.public_ip_name
-
-       resource_group_name =  each.value.resource_group_name
-
-
-}
