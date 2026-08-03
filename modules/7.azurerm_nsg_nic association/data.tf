@@ -1,11 +1,11 @@
 
 data "azurerm_network_security_group" "nsg" {
 
-   
+  for_each = var.nsg_nic_ass 
 
-  name = var.nsg_name
+  name = each.value.nsg_name
 
-  resource_group_name = var.resource_group_name
+  resource_group_name = each.value.resource_group_name
 
 }
 
@@ -13,11 +13,11 @@ data "azurerm_network_security_group" "nsg" {
 
 data "azurerm_network_interface" "nic" {
  
+  for_each = var.nsg_nic_ass 
 
-  name = var.nic_name
+   name = each.value.nic_name
 
-  resource_group_name = var.resource_group_name
-
+  resource_group_name = each.value.resource_group_name
 
 
 

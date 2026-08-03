@@ -52,9 +52,6 @@ module "nsg_nic_ass" {
 
   depends_on = [module.nsg, module.nic_vm]
   source     = "../../modules/7.azurerm_nsg_nic association"
-
-  nic_name            = "dev_frontend_nic"
-  nsg_name            = "ssh"
-  resource_group_name = "dev_rg1"
+  nsg_nic_ass = var.nsg_nic_ass
 
 }

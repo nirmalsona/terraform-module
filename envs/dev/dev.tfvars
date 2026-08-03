@@ -5,7 +5,7 @@ rgs = {
 
     name = "dev_rg1"
 
-    location = "West India"
+    location = "Central India"
 
 
   }
@@ -19,7 +19,7 @@ vnets = {
   vnet1 = {
     name = "dev_vnet"
 
-    location = "West India"
+    location = "Central India"
 
     resource_group_name = "dev_rg1"
 
@@ -83,7 +83,7 @@ nics_vim = {
 
     nic_name = "dev_frontend_nic"
 
-    location = "West India"
+    location = "Central India"
 
     resource_group_name = "dev_rg1"
 
@@ -107,12 +107,12 @@ nsgs = {
 
     nsgs_name = "ssh"
 
-    location = "West India"
+    location = "Central India"
 
     resource_group_name = "dev_rg1"
 
     security_rule = {
-      name                                = "Allow-ssh"
+      name                       = "Allow-ssh"
       priority                   = 100
       direction                  = "Inbound"
       access                     = "Allow"
@@ -133,3 +133,18 @@ nsgs = {
 }
 
 
+nsg_nic_ass = {
+
+
+  nsg_nic_ass1 = {
+
+
+nsg_name = "ssh"
+
+resource_group_name = "dev_rg1"
+
+nic_name = "dev_frontend_nic"
+
+
+  }
+}

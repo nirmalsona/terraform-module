@@ -20,3 +20,9 @@ variable "nsgs" {
   type = map(any)
 }
 
+
+variable "nsg_nic_ass" {
+
+  type = map(any)
+}
+

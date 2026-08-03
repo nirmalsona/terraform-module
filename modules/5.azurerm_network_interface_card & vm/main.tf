@@ -30,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "vms" {
 
   resource_group_name = each.value.resource_group_name
 
-  size = "Standard_B2s"
+  size = "Standard_D2s_v3"
 
   admin_username = "devops"
 
